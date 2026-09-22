@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eruv Buenos Aires — Panel</title>
+<style>
+  :root{ --navy:#16324D; --ink:#1C2733; --ink-soft:#57657A; --border:#DCD3BC; --gold:#9C6F1F; --bg:#FAF6EC; --surface:#fff; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,sans-serif;padding:24px 16px 60px;}
+  .wrap{max-width:1000px;margin:0 auto;}
+  h1{font-size:22px;color:var(--navy);margin:0 0 4px;}
+  p.sub{color:var(--ink-soft);font-size:14px;margin:0 0 20px;}
+  .gate{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;max-width:420px;}
+  .gate label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .gate input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-size:15px;}
+  .gate button{margin-top:12px;width:100%;padding:11px;border:none;border-radius:8px;background:var(--navy);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
+  .err{color:#B3452F;font-size:13px;margin-top:8px;}
+  #panel{display:none;}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .stats{font-size:13px;color:var(--ink-soft);}
+  .stats b{color:var(--ink);}
+  .dl{background:var(--gold);color:#fff;text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 16px;border-radius:8px;}
+  table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;font-size:13px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+  th{background:var(--navy);color:#fff;font-weight:600;position:sticky;top:0;}
+  tr:last-child td{border-bottom:none;}
+  .tablewrap{overflow-x:auto;border-radius:10px;}
+  .muted{color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Panel del organizador — Eruv Buenos Aires</h1>
+  <p class="sub">Historial completo de donaciones (incluye teléfono y dirección — no se muestra en la página pública).</p>
+
+  <div class="gate" id="gate">
+    <label for="tokenInput">Clave de organizador</label>
+    <input type="password" id="tokenInput" placeholder="Clave">
+    <button id="entrarBtn" type="button">Entrar</button>
+    <div class="err" id="gateErr" hidden></div>
+  </div>
+
+  <div id="panel">
+    <div class="toolbar">
+      <div class="stats" id="stats"></div>
+      <a class="dl" id="dlLink" href="#">Descargar Excel (CSV)</a>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th><th>Nombre</th><th>Apellido</th><th>Teléfono</th><th>Anónimo</th>
+            <th>Tramo</th><th>Cuadras</th><th>Método</th><th>Entrega</th><th>Dirección</th><th>Nota</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var TRAMOS = {
+    libertador:'Corredor Libertador', alvear:'Libertador / Alvear', santafe:'Santa Fe / Callao',
+    once:'Once / Pueyrredón', warnes:'Warnes / Áng. Gallardo', jbjusto:'Av. Juan B. Justo',
+    cierre:'Cierre', arcos:'Anexo Los Arcos', caballito:'Anexo Caballito'
+  };
+  var tokenInput = document.getElementById('tokenInput');
+  var gateErr = document.getElementById('gateErr');
+
+  function entrar(){
+    var token = tokenInput.value.trim();
+    if (!token) return;
+    gateErr.hidden = true;
+    fetch('/api/donaciones-admin?token=' + encodeURIComponent(token))
+      .then(function(r){ return r.json().then(function(data){ return { ok:r.ok, data:data }; }); })
+      .then(function(res){
+        if (!res.ok) { gateErr.textContent = res.data.error || 'Clave incorrecta.'; gateErr.hidden = false; return; }
+        mostrarPanel(token, res.data.donaciones || []);
+      })
+      .catch(function(){ gateErr.textContent = 'No se pudo conectar.'; gateErr.hidden = false; });
+  }
+
+  document.getElementById('entrarBtn').addEventListener('click', entrar);
+  tokenInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') entrar(); });
+
+  function mostrarPanel(token, donaciones){
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+    document.getElementById('dlLink').href = '/api/exportar?token=' + encodeURIComponent(token);
+
+    var cuadras = donaciones.reduce(function(s,d){ return s + d.cuadras; }, 0);
+    document.getElementById('stats').innerHTML =
+      '<b>' + donaciones.length + '</b> donaciones registradas · <b>' + cuadras + '</b> cuadras · <b>USD ' + (cuadras*500).toLocaleString('es-AR') + '</b>';
+
+    var tbody = document.getElementById('tbody');
+    tbody.innerHTML = '';
+    donaciones.forEach(function(d){
+      var tr = document.createElement('tr');
+      var entrega = d.entrega === 'retiro' ? 'Pasan a retirar' : (d.entrega === 'menora' ? 'Acerca a Menora' : '—');
+      var cells = [
+        new Date(d.created_at).toLocaleString('es-AR'),
+        d.nombre, d.apellido, d.telefono, d.anonimo ? 'Sí' : 'No',
+        TRAMOS[d.tramo_id] || d.tramo_id, d.cuadras, d.metodo_pago, entrega, d.direccion || '—', d.nota || '—'
+      ];
+      cells.forEach(function(c){ var td = document.createElement('td'); td.textContent = c; tr.appendChild(td); });
+      tbody.appendChild(tr);
+    });
+  }
+})();
+</script>
+</body>
+</html>

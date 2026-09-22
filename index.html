@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eruv Buenos Aires — Donaciones</title>
+<style>
+  :root{
+    --bg:#FAF6EC; --surface:#FFFFFF; --surface-2:#F3ECD8;
+    --ink:#1C2733; --ink-soft:#57657A; --ink-faint:#8592A3;
+    --navy:#16324D; --navy-deep:#0E2136; --navy-ink:#EAF1F8;
+    --gold:#B9862A; --gold-strong:#9C6F1F; --gold-soft:#EFDCAE; --gold-wash:#FBF3DF;
+    --border:rgba(22,50,77,0.16); --border-soft:rgba(22,50,77,0.08);
+    --good:#3F7A5A; --good-wash:#E4F0E9; --bad:#B3452F; --bad-wash:#FBEAE4;
+    --tier-cobre:#A9613C; --tier-cobre-bg:#F3E4D8;
+    --tier-plata:#69747F; --tier-plata-bg:#E7EBEF;
+    --tier-oro:#9C6F1F; --tier-oro-bg:#FBF3DF;
+    --tier-platinum:#3E4C63; --tier-platinum-bg:linear-gradient(135deg,#E9EEF5,#D6DEE9);
+    --shadow:0 1px 2px rgba(14,33,54,0.06), 0 10px 30px -18px rgba(14,33,54,0.25);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0E1A28; --surface:#152840; --surface-2:#1B3350;
+      --ink:#F1EBDB; --ink-soft:#B9C3D2; --ink-faint:#8493A8;
+      --navy:#1E3E60; --navy-deep:#0B1826; --navy-ink:#EFEBDD;
+      --gold:#E3B655; --gold-strong:#F0C978; --gold-soft:#4A3A1B; --gold-wash:#241C0E;
+      --border:rgba(240,235,221,0.16); --border-soft:rgba(240,235,221,0.08);
+      --good:#7BC29B; --good-wash:#173327; --bad:#E38F7A; --bad-wash:#3A2016;
+      --tier-cobre:#E0A379; --tier-cobre-bg:#3A2418;
+      --tier-plata:#C3CBD4; --tier-plata-bg:#2A323C;
+      --tier-oro:#F0C978; --tier-oro-bg:#241C0E;
+      --tier-platinum:#D3DDEC; --tier-platinum-bg:linear-gradient(135deg,#2A3444,#1E2734);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0E1A28; --surface:#152840; --surface-2:#1B3350;
+    --ink:#F1EBDB; --ink-soft:#B9C3D2; --ink-faint:#8493A8;
+    --navy:#1E3E60; --navy-deep:#0B1826; --navy-ink:#EFEBDD;
+    --gold:#E3B655; --gold-strong:#F0C978; --gold-soft:#4A3A1B; --gold-wash:#241C0E;
+    --border:rgba(240,235,221,0.16); --border-soft:rgba(240,235,221,0.08);
+    --good:#7BC29B; --good-wash:#173327; --bad:#E38F7A; --bad-wash:#3A2016;
+    --tier-cobre:#E0A379; --tier-cobre-bg:#3A2418;
+    --tier-plata:#C3CBD4; --tier-plata-bg:#2A323C;
+    --tier-oro:#F0C978; --tier-oro-bg:#241C0E;
+    --tier-platinum:#D3DDEC; --tier-platinum-bg:linear-gradient(135deg,#2A3444,#1E2734);
+    color-scheme:dark;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Work Sans', system-ui, -apple-system, sans-serif;
+    padding-inline:20px; padding-block:0 48px;
+  }
+  h1,h2,h3,.display{font-family:'Baloo 2', system-ui, sans-serif; font-weight:700; color:var(--navy); text-wrap:balance;}
+  :root[data-theme="dark"] h1, :root[data-theme="dark"] h2, :root[data-theme="dark"] h3{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) h1, :root:not([data-theme="light"]) h2, :root:not([data-theme="light"]) h3{color:var(--navy-ink);}}
+  a{color:var(--gold-strong);}
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  .wrap{max-width:880px;margin-inline:auto;}
+
+  .hero{padding-block:40px 28px;display:flex;flex-direction:column;gap:14px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-strong);background:var(--gold-wash);border:1px solid var(--gold-soft);padding:6px 12px;border-radius:999px;}
+  .hero h1{font-size:clamp(30px,5vw,44px);line-height:1.08;margin:0;}
+  .hero p.lead{font-size:17px;color:var(--ink-soft);max-width:60ch;margin:0;}
+  .hero-figures{display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--ink-soft);}
+  .chip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;box-shadow:var(--shadow);font-weight:600;color:var(--navy);}
+  :root[data-theme="dark"] .chip{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip{color:var(--navy-ink);}}
+  .chip b{color:var(--gold-strong);font-variant-numeric:tabular-nums;}
+
+  .progress-card{background:var(--navy);color:var(--navy-ink);border-radius:20px;padding:26px 24px 24px;box-shadow:var(--shadow);margin-block:8px 28px;}
+  .progress-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .progress-top h2{color:var(--navy-ink);font-size:18px;margin:0;}
+  .progress-pct{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22px;color:var(--gold-strong);font-variant-numeric:tabular-nums;}
+  .bar-track{height:14px;border-radius:999px;background:rgba(255,255,255,0.14);overflow:hidden;}
+  .bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold-strong),var(--gold));width:0%;transition:width .6s ease;}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px;}
+  .stat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:14px 14px 12px;}
+  .stat .num{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:clamp(18px,3.4vw,24px);font-variant-numeric:tabular-nums;color:var(--navy-ink);display:block;}
+  .stat .lbl{font-size:12px;color:rgba(234,241,248,0.72);text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
+  @media (max-width:520px){ .stat-row{grid-template-columns:1fr 1fr;} .stat:last-child{grid-column:1 / -1;} }
+
+  section{margin-block:40px;}
+  .section-head{margin-bottom:16px;}
+  .section-head h2{font-size:24px;margin:0 0 6px;}
+  .section-head p{margin:0;color:var(--ink-soft);font-size:15px;max-width:62ch;}
+
+  .map-figure{margin:0;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:16px 16px 6px;box-shadow:var(--shadow);}
+  .map-svg{width:100%;height:auto;display:block;}
+  .map-track{fill:none;stroke:var(--border);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;}
+  .map-fill{fill:none;stroke:var(--gold);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;transition:stroke-dasharray .5s ease;}
+  .map-hit{fill:none;stroke:transparent;stroke-width:24;cursor:pointer;}
+  .tramo-seg:focus-visible .map-track{stroke:var(--gold-strong);stroke-width:11;}
+  .tramo-seg.is-active .map-track{stroke:var(--navy-deep);}
+  :root[data-theme="dark"] .tramo-seg.is-active .map-track{stroke:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tramo-seg.is-active .map-track{stroke:var(--navy-ink);}}
+  .tramo-label{font-family:'Work Sans',sans-serif;font-size:10.5px;font-weight:600;fill:var(--ink-soft);}
+  .anexo-dot{fill:var(--surface);stroke:var(--border);stroke-width:2;}
+  .anexo-connector{stroke:var(--border);stroke-width:2;stroke-dasharray:3 3;}
+  figcaption{font-size:12.5px;color:var(--ink-faint);padding:10px 4px 6px;}
+  .map-legend{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 14px;}
+  .map-legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-soft);padding:6px 0;border-top:1px solid var(--border-soft);}
+  .map-legend .dot{width:9px;height:9px;border-radius:50%;background:var(--border);flex:none;}
+  .map-legend li.is-full .dot{background:var(--gold);}
+  .map-legend b{color:var(--ink);font-weight:600;}
+  .map-legend .lg-count{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink-faint);}
+
+  .calc{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow);}
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-weight:600;font-size:14px;color:var(--ink);margin-bottom:8px;}
+  .quick-picks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+  .pick-btn{font-family:inherit;font-size:13.5px;font-weight:600;padding:9px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface-2);color:var(--navy);cursor:pointer;}
+  :root[data-theme="dark"] .pick-btn{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pick-btn{color:var(--navy-ink);}}
+  .pick-btn[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--navy-ink);}
+  .pick-btn:focus-visible, input:focus-visible, textarea:focus-visible, button:focus-visible, select:focus-visible{outline:2.5px solid var(--gold);outline-offset:2px;}
+  .custom-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .custom-row input[type="number"]{width:96px;}
+  input[type="text"],input[type="tel"],input[type="number"],textarea,select{
+    font-family:inherit;font-size:15px;padding:11px 13px;border-radius:10px;
+    border:1.5px solid var(--border);background:var(--surface);color:var(--ink);width:100%;
+  }
+  .helper{font-size:12.5px;color:var(--ink-faint);margin-top:6px;}
+  .calc-result{background:var(--gold-wash);border:1px solid var(--gold-soft);border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+  .calc-result .amount{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:26px;color:var(--gold-strong);font-variant-numeric:tabular-nums;}
+  .calc-result .equiv{font-size:13px;color:var(--ink-soft);}
+  .radio-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .radio-opt{flex:1 1 160px;display:flex;align-items:center;gap:9px;border:1.5px solid var(--border);border-radius:12px;padding:11px 13px;cursor:pointer;font-size:14.5px;font-weight:500;}
+  .radio-opt input{accent-color:var(--navy);width:16px;height:16px;}
+  .check-row{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--ink-soft);}
+  .check-row input{margin-top:3px;accent-color:var(--navy);width:16px;height:16px;}
+  .btn-primary{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;background:var(--navy);color:var(--navy-ink);border:none;border-radius:12px;padding:15px 20px;width:100%;cursor:pointer;box-shadow:var(--shadow);}
+  .btn-primary:hover{background:var(--navy-deep);}
+  .btn-primary:disabled{opacity:.55;cursor:not-allowed;}
+  .form-msg{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:13.5px;}
+  .form-msg.ok{border:1.5px solid var(--good);background:var(--good-wash);color:var(--good);}
+  .form-msg.err{border:1.5px solid var(--bad);background:var(--bad-wash);color:var(--bad);}
+
+  .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:560px){.pay-grid{grid-template-columns:1fr;}}
+  .pay-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+  .pay-card h3{font-size:15.5px;margin:0 0 6px;color:var(--navy);font-family:'Work Sans';font-weight:700;}
+  :root[data-theme="dark"] .pay-card h3{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pay-card h3{color:var(--navy-ink);}}
+  .pay-card p{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+  .donor-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+  .donor-card .name{font-weight:700;color:var(--navy);font-size:15px;}
+  :root[data-theme="dark"] .donor-card .name{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .donor-card .name{color:var(--navy-ink);}}
+  .donor-card .meta{font-size:12.5px;color:var(--ink-faint);margin-top:4px;}
+  .donor-card .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .donor-card .badge{display:inline-block;font-size:11.5px;font-weight:700;color:var(--ink-soft);background:var(--surface-2);border-radius:999px;padding:3px 9px;}
+  .tier-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;}
+  .tier-badge[data-tier="cobre"]{color:var(--tier-cobre);background:var(--tier-cobre-bg);}
+  .tier-badge[data-tier="plata"]{color:var(--tier-plata);background:var(--tier-plata-bg);}
+  .tier-badge[data-tier="oro"]{color:var(--tier-oro);background:var(--tier-oro-bg);}
+  .tier-badge[data-tier="platinum"]{color:var(--tier-platinum);background:var(--tier-platinum-bg);}
+  .tier-key{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .wall-empty{grid-column:1 / -1;text-align:center;padding:32px 20px;border:1.5px dashed var(--border);border-radius:16px;color:var(--ink-soft);font-size:14.5px;}
+  .wall-empty b{display:block;color:var(--navy);font-family:'Baloo 2';font-size:17px;margin-bottom:4px;}
+  :root[data-theme="dark"] .wall-empty b{color:var(--navy-ink);}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wall-empty b{color:var(--navy-ink);}}
+
+  footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--border);font-size:13px;color:var(--ink-faint);display:flex;flex-direction:column;gap:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="eyebrow">Templo Menora · Eruv de Buenos Aires</span>
+    <h1>Ayudá a construir el Eruv, cuadra por cuadra</h1>
+    <p class="lead">El Eruv le permite a nuestra comunidad cargar objetos y empujar cochecitos en Shabat dentro del área delimitada. Se financia por tramos: cada cuadra cuesta USD&nbsp;500, y podés donar la cantidad que quieras — sola/o o en grupo.</p>
+    <div class="hero-figures">
+      <span class="chip">1 cuadra = <b>USD 500</b></span>
+      <span class="chip">1 km (10 cuadras) = <b>USD 5.000</b></span>
+      <span class="chip">Objetivo: <b>20 km</b> · <b>USD 100.000</b></span>
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <h2>Cuánto llevamos recaudado</h2>
+      <span class="progress-pct" id="pct">0%</span>
+    </div>
+    <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+    <div class="stat-row">
+      <div class="stat"><span class="num" id="statUsd">USD 0</span><span class="lbl">de USD 100.000</span></div>
+      <div class="stat"><span class="num" id="statCuadras">0</span><span class="lbl">de 200 cuadras</span></div>
+      <div class="stat"><span class="num" id="statKm">0,0 km</span><span class="lbl">de 20 km</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>El recorrido</h2>
+      <p>Tocá un tramo del mapa (o elegilo en el formulario de abajo) para dedicarlo. Se pinta de dorado a medida que se confirman donaciones en esa zona.</p>
+    </div>
+
+    <figure class="map-figure">
+      <svg class="map-svg" viewBox="0 0 640 500" role="img" aria-label="Recorrido del Eruv de Buenos Aires dividido en tramos donables." id="mapSvg">
+        <line class="anexo-connector" x1="430" y1="68" x2="345" y2="30"></line>
+        <g class="tramo-seg" id="seg-arcos" data-tramo="arcos" tabindex="0" role="button" aria-label="Anexo Sanatorio Los Arcos">
+          <circle class="anexo-dot" cx="330" cy="24" r="16"></circle>
+          <text class="tramo-label" x="330" y="-2" text-anchor="middle">Los Arcos</text>
+        </g>
+
+        <g class="tramo-seg" id="seg-libertador" data-tramo="libertador" tabindex="0" role="button" aria-label="Corredor Libertador">
+          <path class="map-hit" d="M150,90 L430,68 L525,145" pathLength="100"></path>
+          <path class="map-track" d="M150,90 L430,68 L525,145" pathLength="100"></path>
+          <path class="map-fill" id="fill-libertador" d="M150,90 L430,68 L525,145" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="330" y="58" text-anchor="middle">Corredor Libertador</text>
+        </g>
+
+        <g class="tramo-seg" id="seg-alvear" data-tramo="alvear" tabindex="0" role="button" aria-label="Av. del Libertador y Alvear">
+          <path class="map-hit" d="M525,145 L562,235 L540,305" pathLength="100"></path>
+          <path class="map-track" d="M525,145 L562,235 L540,305" pathLength="100"></path>
+          <path class="map-fill" id="fill-alvear" d="M525,145 L562,235 L540,305" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="592" y="230" text-anchor="start">Libertador /<tspan x="592" dy="12">Alvear</tspan></text>
+        </g>
+
+        <g class="tramo-seg" id="seg-santafe" data-tramo="santafe" tabindex="0" role="button" aria-label="Av. Santa Fe y Av. Callao">
+          <path class="map-hit" d="M540,305 L497,362" pathLength="100"></path>
+          <path class="map-track" d="M540,305 L497,362" pathLength="100"></path>
+          <path class="map-fill" id="fill-santafe" d="M540,305 L497,362" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="595" y="338" text-anchor="start">Santa Fe /<tspan x="595" dy="12">Callao</tspan></text>
+        </g>
+
+        <g class="tramo-seg" id="seg-once" data-tramo="once" tabindex="0" role="button" aria-label="Once y Av. Pueyrredón">
+          <path class="map-hit" d="M497,362 L395,392" pathLength="100"></path>
+          <path class="map-track" d="M497,362 L395,392" pathLength="100"></path>
+          <path class="map-fill" id="fill-once" d="M497,362 L395,392" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="446" y="416" text-anchor="middle">Once / Pueyrredón</text>
+        </g>
+
+        <g class="tramo-seg" id="seg-warnes" data-tramo="warnes" tabindex="0" role="button" aria-label="Av. Warnes y Ángel Gallardo, Parque Centenario">
+          <path class="map-hit" d="M395,392 L255,402 L178,382" pathLength="100"></path>
+          <path class="map-track" d="M395,392 L255,402 L178,382" pathLength="100"></path>
+          <path class="map-fill" id="fill-warnes" d="M395,392 L255,402 L178,382" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="286" y="438" text-anchor="middle">Warnes / Áng. Gallardo</text>
+        </g>
+
+        <g class="tramo-seg" id="seg-jbjusto" data-tramo="jbjusto" tabindex="0" role="button" aria-label="Av. Juan B. Justo">
+          <path class="map-hit" d="M178,382 L118,280 L128,160" pathLength="100"></path>
+          <path class="map-track" d="M178,382 L118,280 L128,160" pathLength="100"></path>
+          <path class="map-fill" id="fill-jbjusto" d="M178,382 L118,280 L128,160" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="60" y="284" text-anchor="middle">Av. Juan<tspan x="60" dy="12">B. Justo</tspan></text>
+        </g>
+
+        <g class="tramo-seg" id="seg-cierre" data-tramo="cierre" tabindex="0" role="button" aria-label="Cierre entre Juan B. Justo y Av. Córdoba">
+          <path class="map-hit" d="M128,160 L150,90" pathLength="100"></path>
+          <path class="map-track" d="M128,160 L150,90" pathLength="100"></path>
+          <path class="map-fill" id="fill-cierre" d="M128,160 L150,90" pathLength="100" stroke-dasharray="0,100"></path>
+          <text class="tramo-label" x="98" y="122" text-anchor="middle">Cierre</text>
+        </g>
+
+        <line class="anexo-connector" x1="178" y1="382" x2="92" y2="452"></line>
+        <g class="tramo-seg" id="seg-caballito" data-tramo="caballito" tabindex="0" role="button" aria-label="Anexo Caballito">
+          <circle class="anexo-dot" cx="90" cy="462" r="18"></circle>
+          <text class="tramo-label" x="90" y="490" text-anchor="middle">Caballito</text>
+        </g>
+      </svg>
+      <figcaption>Esquema del recorrido (no es un mapa geográfico exacto) — cada tramo se pinta de dorado en proporción a lo donado.</figcaption>
+    </figure>
+
+    <ul class="map-legend" id="mapLegend"></ul>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Doná tu tramo</h2>
+      <p>Completá el formulario y tu donación queda al instante en el mapa y el muro.</p>
+    </div>
+
+    <form class="calc" id="donForm">
+      <div class="field">
+        <label for="tramoSelect">¿Qué tramo del recorrido querés donar?</label>
+        <select id="tramoSelect" required></select>
+        <p class="helper" id="tramoHelper"></p>
+      </div>
+
+      <div class="field">
+        <label>¿Cuántas cuadras querés donar?</label>
+        <div class="quick-picks" id="quickPicks">
+          <button type="button" class="pick-btn" data-cuadras="1">1 cuadra</button>
+          <button type="button" class="pick-btn" data-cuadras="2">2 cuadras</button>
+          <button type="button" class="pick-btn" data-cuadras="5">5 cuadras</button>
+          <button type="button" class="pick-btn" data-cuadras="10">1 km (10 cuadras)</button>
+        </div>
+        <div class="custom-row">
+          <input type="number" id="cuadrasInput" min="1" value="1" aria-label="Cantidad de cuadras">
+          <span class="helper" style="margin:0;" id="cuadrasHelper">u otra cantidad</span>
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <div>
+          <div class="amount" id="calcAmount">USD 500</div>
+          <div class="equiv" id="calcEquiv">1 cuadra donada</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="nombreInput">Nombre</label>
+        <input type="text" id="nombreInput" placeholder="Ej: Débora" required>
+      </div>
+
+      <div class="field">
+        <label for="apellidoInput">Apellido</label>
+        <input type="text" id="apellidoInput" placeholder="Ej: Goldberg" required>
+        <div class="check-row" style="margin-top:10px;">
+          <input type="checkbox" id="anonimoCheck">
+          <label for="anonimoCheck" style="margin:0;font-weight:400;">Mostrarme como donante anónimo en el muro público (igual necesitamos tu nombre para coordinar el pago)</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="telefonoInput">Teléfono</label>
+        <input type="tel" id="telefonoInput" placeholder="Ej: 11 5555-5555" required>
+        <p class="helper">No se muestra públicamente — lo usamos solo para coordinar con vos.</p>
+      </div>
+
+      <div class="field">
+        <label>¿Cómo vas a pagar?</label>
+        <div class="radio-row">
+          <label class="radio-opt"><input type="radio" name="metodo" value="Transferencia" checked> Transferencia</label>
+          <label class="radio-opt"><input type="radio" name="metodo" value="Efectivo"> Efectivo</label>
+        </div>
+        <p class="helper" id="metodoHelper">Te vamos a escribir por WhatsApp con el alias/CBU para transferir.</p>
+      </div>
+
+      <div class="field" id="entregaField" hidden>
+        <label>¿Cómo coordinamos la entrega del efectivo?</label>
+        <div class="radio-row">
+          <label class="radio-opt"><input type="radio" name="entrega" value="retiro"> Que pasen a retirarlo</label>
+          <label class="radio-opt"><input type="radio" name="entrega" value="menora"> Prefiero acercarme a Templo Menora</label>
+        </div>
+        <p class="helper">Templo Menora: Av. Las Heras 3337 (confirmamos horario por WhatsApp).</p>
+      </div>
+
+      <div class="field" id="direccionField" hidden>
+        <label for="direccionInput">Dirección para retirar el efectivo</label>
+        <input type="text" id="direccionInput" placeholder="Dirección y horario aproximado">
+      </div>
+
+      <div class="field">
+        <label for="calleInput">¿Hay una cuadra puntual que quieras dedicar dentro de ese tramo? (opcional)</label>
+        <input type="text" id="calleInput" placeholder="Ej: la cuadra frente al Templo, o donde vivió tu familia">
+      </div>
+
+      <button type="submit" class="btn-primary" id="submitBtn">Confirmar donación</button>
+      <div id="formMsg"></div>
+    </form>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Formas de pago</h2></div>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <h3>Transferencia</h3>
+        <p>Te contactamos por WhatsApp con el alias y el monto apenas confirmás el formulario.</p>
+      </div>
+      <div class="pay-card">
+        <h3>Efectivo</h3>
+        <p>Pasamos a retirarlo por la dirección que nos dejes, coordinando el horario por WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Muro de donantes</h2>
+      <p>Cada cuadra confirmada suma acá. Podés aparecer con tu nombre o como donante anónimo — vos elegís.</p>
+      <div class="tier-key">
+        <span class="tier-badge" data-tier="platinum">Platinum · 1 km o más</span>
+        <span class="tier-badge" data-tier="oro">Oro · 5+ cuadras</span>
+        <span class="tier-badge" data-tier="plata">Plata · 2+ cuadras</span>
+        <span class="tier-badge" data-tier="cobre">Cobre · 1 cuadra</span>
+      </div>
+    </div>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <footer>
+    <div><strong>Eruv de Buenos Aires</strong> — campaña organizada por Templo Menora.</div>
+    <div>Consultas: WhatsApp <span style="font-weight:700;color:var(--good);">11 4194-8700</span>.</div>
+    <div>Los montos son en dólares estadounidenses (USD) a valor de referencia. Las donaciones que ves acá son las que la gente cargó desde este formulario; la cantidad de cuadras por tramo es una estimación de referencia y puede ajustarse.</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var CONFIG = {
+    valorCuadraUsd: 500,
+    objetivoCuadras: 200,
+    objetivoKm: 20,
+    objetivoUsd: 100000,
+    tramos: [
+      { id:"libertador", nombre:"Corredor Libertador",           detalle:"Av. Sarmiento y las vías del tren, cerca del Aeroparque", cuadrasTotal:25 },
+      { id:"alvear",     nombre:"Av. del Libertador / Alvear",    detalle:"Bordeando Recoleta",                                     cuadrasTotal:20 },
+      { id:"santafe",    nombre:"Av. Santa Fe / Av. Callao",      detalle:"Zona de El Ateneo Grand Splendid",                       cuadrasTotal:15 },
+      { id:"once",       nombre:"Once / Av. Pueyrredón",          detalle:"Límite con Almagro",                                     cuadrasTotal:15 },
+      { id:"warnes",     nombre:"Av. Warnes / Áng. Gallardo",     detalle:"Bordeando Parque Centenario",                            cuadrasTotal:25 },
+      { id:"jbjusto",    nombre:"Av. Juan B. Justo",              detalle:"Oeste de Palermo (Soho / Hollywood)",                    cuadrasTotal:30 },
+      { id:"cierre",     nombre:"Cierre Juan B. Justo / Córdoba", detalle:"Vuelta al punto de partida",                             cuadrasTotal:10 },
+      { id:"arcos",      nombre:"Anexo Sanatorio Los Arcos",      detalle:"Anexo",                                                  cuadrasTotal:20 },
+      { id:"caballito",  nombre:"Anexo Caballito",                detalle:"Anexo",                                                  cuadrasTotal:40 }
+    ]
+  };
+
+  var TIERS = [
+    { id:"platinum", min:10, nombre:"Platinum" },
+    { id:"oro",       min:5,  nombre:"Oro" },
+    { id:"plata",     min:2,  nombre:"Plata" },
+    { id:"cobre",     min:1,  nombre:"Cobre" }
+  ];
+  function tierFor(cuadras){
+    for (var i=0;i<TIERS.length;i++){ if (cuadras >= TIERS[i].min) return TIERS[i]; }
+    return TIERS[TIERS.length-1];
+  }
+
+  var DONACIONES = []; // se llena desde /api/donaciones
+
+  function tramoById(id){
+    for (var i=0;i<CONFIG.tramos.length;i++){ if (CONFIG.tramos[i].id===id) return CONFIG.tramos[i]; }
+    return null;
+  }
+  function cuadrasDonadasEnTramo(id){
+    return DONACIONES.filter(function(d){ return d.tramoId===id; }).reduce(function(s,d){ return s+d.cuadras; }, 0);
+  }
+  function fmtUsd(n){ return "USD " + Math.round(n).toLocaleString('es-AR'); }
+  function fmtKm(cuadras){ return (cuadras/10).toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + " km"; }
+
+  function renderProgress(){
+    var cuadras = DONACIONES.reduce(function(s,d){ return s + d.cuadras; }, 0);
+    var usd = cuadras * CONFIG.valorCuadraUsd;
+    var pct = Math.min(100, Math.round((cuadras / CONFIG.objetivoCuadras) * 100));
+    document.getElementById('pct').textContent = pct + '%';
+    document.getElementById('barFill').style.width = pct + '%';
+    document.getElementById('statUsd').textContent = fmtUsd(usd);
+    document.getElementById('statCuadras').textContent = cuadras.toLocaleString('es-AR');
+    document.getElementById('statKm').textContent = fmtKm(cuadras);
+  }
+
+  function renderMap(){
+    var legend = document.getElementById('mapLegend');
+    legend.innerHTML = '';
+    CONFIG.tramos.forEach(function(t){
+      var donadas = cuadrasDonadasEnTramo(t.id);
+      var pct = Math.min(100, (donadas / t.cuadrasTotal) * 100);
+      var fillPath = document.getElementById('fill-' + t.id);
+      if (fillPath) fillPath.setAttribute('stroke-dasharray', pct.toFixed(1) + ',' + (100-pct).toFixed(1));
+      var seg = document.getElementById('seg-' + t.id);
+      if (seg) seg.setAttribute('aria-label', t.nombre + ': ' + donadas + ' de ' + t.cuadrasTotal + ' cuadras donadas');
+      if (seg) seg.classList.toggle('is-active', donadas > 0);
+
+      var li = document.createElement('li');
+      if (pct >= 100) li.className = 'is-full';
+      li.innerHTML = '<span class="dot"></span><b>' + t.nombre + '</b><span class="lg-count">' + donadas + '/' + t.cuadrasTotal + '</span>';
+      legend.appendChild(li);
+    });
+  }
+
+  function renderWall(){
+    var wall = document.getElementById('wall');
+    wall.innerHTML = '';
+    if (DONACIONES.length === 0){
+      var empty = document.createElement('div');
+      empty.className = 'wall-empty';
+      empty.innerHTML = '<b>Todavía no hay donaciones</b>Sé la primera persona (o el primer grupo) en sumar una cuadra al Eruv.';
+      wall.appendChild(empty);
+      return;
+    }
+    var ordenadas = DONACIONES.slice().sort(function(a,b){
+      var ra = TIERS.indexOf(tierFor(a.cuadras));
+      var rb = TIERS.indexOf(tierFor(b.cuadras));
+      if (ra !== rb) return ra - rb;
+      if (b.cuadras !== a.cuadras) return b.cuadras - a.cuadras;
+      return new Date(a.fecha) - new Date(b.fecha);
+    });
+    ordenadas.forEach(function(d){
+      var t = tramoById(d.tramoId);
+      var tier = tierFor(d.cuadras);
+      var card = document.createElement('div');
+      card.className = 'donor-card';
+      var nameEl = document.createElement('div');
+      nameEl.className = 'name';
+      nameEl.textContent = d.nombre ? d.nombre : 'Donante anónimo';
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = (t ? t.nombre : 'Tramo a confirmar') + (d.nota ? ' · ' + d.nota : '');
+      var badges = document.createElement('div');
+      badges.className = 'badges';
+      var tierBadge = document.createElement('span');
+      tierBadge.className = 'tier-badge';
+      tierBadge.setAttribute('data-tier', tier.id);
+      tierBadge.textContent = tier.nombre;
+      var cuadrasBadge = document.createElement('span');
+      cuadrasBadge.className = 'badge';
+      cuadrasBadge.textContent = d.cuadras + (d.cuadras === 1 ? ' cuadra' : ' cuadras');
+      badges.appendChild(tierBadge);
+      badges.appendChild(cuadrasBadge);
+      card.appendChild(nameEl);
+      card.appendChild(meta);
+      card.appendChild(badges);
+      wall.appendChild(card);
+    });
+  }
+
+  function renderAll(){ renderProgress(); renderMap(); renderWall(); }
+
+  async function cargarDonaciones(){
+    try {
+      var r = await fetch('/api/donaciones');
+      var data = await r.json();
+      DONACIONES = data.donaciones || [];
+    } catch (e) {
+      DONACIONES = [];
+    }
+    renderAll();
+  }
+
+  // ---- Selector de tramo ----
+  var tramoSelect = document.getElementById('tramoSelect');
+  CONFIG.tramos.forEach(function(t){
+    var opt = document.createElement('option');
+    opt.value = t.id;
+    opt.textContent = t.nombre;
+    tramoSelect.appendChild(opt);
+  });
+
+  function restanteEnTramo(id){
+    var t = tramoById(id);
+    if (!t) return 200;
+    return Math.max(0, t.cuadrasTotal - cuadrasDonadasEnTramo(id));
+  }
+
+  var cuadrasInput = document.getElementById('cuadrasInput');
+  var quickPicks = document.getElementById('quickPicks');
+  var submitBtn = document.getElementById('submitBtn');
+
+  function actualizarTramoHelper(){
+    var t = tramoById(tramoSelect.value);
+    var restante = restanteEnTramo(tramoSelect.value);
+    document.getElementById('tramoHelper').textContent = t ? (t.detalle + ' · quedan ' + restante + ' de ' + t.cuadrasTotal + ' cuadras') : '';
+    document.getElementById('cuadrasHelper').textContent = 'hasta ' + restante + ' cuadras en este tramo';
+    cuadrasInput.max = Math.max(1, restante);
+    if (restante <= 0){
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Este tramo ya está completo — elegí otro';
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Confirmar donación';
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.tramo-seg'), function(seg){
+    function activar(){
+      tramoSelect.value = seg.dataset.tramo;
+      actualizarTramoHelper();
+      document.querySelector('.calc').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    seg.addEventListener('click', activar);
+    seg.addEventListener('keydown', function(e){
+      if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activar(); }
+    });
+  });
+  tramoSelect.addEventListener('change', actualizarTramoHelper);
+
+  function setCuadras(n){
+    var max = Math.max(1, restanteEnTramo(tramoSelect.value));
+    n = Math.max(1, Math.min(max, Math.round(n) || 1));
+    cuadrasInput.value = n;
+    Array.prototype.forEach.call(quickPicks.querySelectorAll('.pick-btn'), function(btn){
+      btn.setAttribute('aria-pressed', String(Number(btn.dataset.cuadras) === n));
+    });
+    var usd = n * CONFIG.valorCuadraUsd;
+    document.getElementById('calcAmount').textContent = fmtUsd(usd);
+    var equivText = n + (n === 1 ? ' cuadra donada' : ' cuadras donadas');
+    if (n >= 10) equivText += ' · ' + fmtKm(n);
+    document.getElementById('calcEquiv').textContent = equivText;
+  }
+
+  quickPicks.addEventListener('click', function(e){
+    var btn = e.target.closest('.pick-btn');
+    if (!btn) return;
+    setCuadras(Number(btn.dataset.cuadras));
+  });
+  cuadrasInput.addEventListener('input', function(){ setCuadras(parseInt(cuadrasInput.value, 10)); });
+
+  // ---- Método de pago: si es efectivo, preguntar cómo se coordina la entrega ----
+  var entregaField = document.getElementById('entregaField');
+  var direccionField = document.getElementById('direccionField');
+  var direccionInput = document.getElementById('direccionInput');
+  var metodoHelper = document.getElementById('metodoHelper');
+
+  function actualizarEntregaUI(){
+    var esEfectivo = document.querySelector('input[name="metodo"]:checked').value === 'Efectivo';
+    entregaField.hidden = !esEfectivo;
+    if (!esEfectivo){
+      direccionField.hidden = true;
+      direccionInput.required = false;
+      Array.prototype.forEach.call(document.querySelectorAll('input[name="entrega"]'), function(r){ r.checked = false; });
+      return;
+    }
+    var entregaEl = document.querySelector('input[name="entrega"]:checked');
+    var esRetiro = entregaEl && entregaEl.value === 'retiro';
+    direccionField.hidden = !esRetiro;
+    direccionInput.required = esRetiro;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="metodo"]'), function(r){
+    r.addEventListener('change', function(){
+      var esEfectivo = document.querySelector('input[name="metodo"]:checked').value === 'Efectivo';
+      metodoHelper.textContent = esEfectivo
+        ? 'Elegí abajo cómo preferís coordinar la entrega.'
+        : 'Te vamos a escribir por WhatsApp con el alias/CBU para transferir.';
+      actualizarEntregaUI();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="entrega"]'), function(r){
+    r.addEventListener('change', actualizarEntregaUI);
+  });
+
+  // ---- Envío del formulario ----
+  var formMsg = document.getElementById('formMsg');
+  function mostrarMsg(texto, ok){
+    formMsg.innerHTML = '';
+    var div = document.createElement('div');
+    div.className = 'form-msg ' + (ok ? 'ok' : 'err');
+    div.textContent = texto;
+    formMsg.appendChild(div);
+  }
+
+  document.getElementById('donForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var metodo = document.querySelector('input[name="metodo"]:checked').value;
+    var entregaEl = document.querySelector('input[name="entrega"]:checked');
+    if (metodo === 'Efectivo' && !entregaEl){
+      mostrarMsg('Elegí cómo coordinar la entrega del efectivo.', false);
+      return;
+    }
+    var payload = {
+      tramoId: tramoSelect.value,
+      cuadras: parseInt(cuadrasInput.value, 10) || 1,
+      nombre: document.getElementById('nombreInput').value.trim(),
+      apellido: document.getElementById('apellidoInput').value.trim(),
+      anonimo: document.getElementById('anonimoCheck').checked,
+      telefono: document.getElementById('telefonoInput').value.trim(),
+      metodoPago: metodo,
+      entrega: metodo === 'Efectivo' ? entregaEl.value : undefined,
+      direccion: (metodo === 'Efectivo' && entregaEl.value === 'retiro') ? direccionInput.value.trim() : undefined,
+      nota: document.getElementById('calleInput').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Confirmando...';
+    try {
+      var r = await fetch('/api/donaciones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data;
+      try { data = await r.json(); }
+      catch (parseErr) { throw new Error('No se pudo conectar con el servidor de donaciones. Si estás probando la vista previa, esto es esperable: hace falta desplegar el sitio en Vercel (con Supabase conectado) para que el formulario guarde de verdad.'); }
+      if (!r.ok) throw new Error(data.error || 'No se pudo registrar la donación.');
+
+      mostrarMsg('¡Gracias! Tu donación ya está en el muro. Te vamos a escribir por WhatsApp para coordinar el pago.', true);
+      document.getElementById('donForm').reset();
+      entregaField.hidden = true;
+      direccionField.hidden = true;
+      metodoHelper.textContent = 'Te vamos a escribir por WhatsApp con el alias/CBU para transferir.';
+      await cargarDonaciones();
+      actualizarTramoHelper();
+      setCuadras(1);
+    } catch (err) {
+      mostrarMsg(err.message || 'Hubo un problema. Probá de nuevo en un momento.', false);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Confirmar donación';
+    }
+  });
+
+  tramoSelect.value = 'libertador';
+  cargarDonaciones().then(function(){
+    actualizarTramoHelper();
+    setCuadras(1);
+  });
+
+  // Refresco periódico para que quien tenga la página abierta vea donaciones nuevas.
+  setInterval(function(){
+    cargarDonaciones().then(actualizarTramoHelper);
+  }, 20000);
+})();
+</script>
+</body>
+</html>
